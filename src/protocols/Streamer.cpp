@@ -898,6 +898,16 @@ void Streamer::ReceivePacketsLoop()
             rxDataRate_Bps.store((uint32_t)dataRate, std::memory_order_relaxed);
         }
     }
+
+    // drain buffers so all contexts are shut down cleanly
+    for (int i = 0; i < buffersCount;) {
+        if (!dataPort->WaitForReading(handles[bi], 1000))
+            continue;
+        
+        ++i;
+        bi = (bi + 1) & (buffersCount-1);
+    }
+
     dataPort->AbortReading(epIndex);
     rxDataRate_Bps.store(0, std::memory_order_relaxed);
 }

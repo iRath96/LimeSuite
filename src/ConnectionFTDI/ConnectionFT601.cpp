@@ -545,8 +545,8 @@ void ConnectionFT601::AbortReading(int ep)
 
     for(int i = 0; i<USB_MAX_CONTEXTS; ++i)
     {
-        if(contexts[i].used)
-            libusb_cancel_transfer(contexts[i].transfer);
+        //if(contexts[i].used)
+        //    libusb_cancel_transfer(contexts[i].transfer);
     }
     FT_FlushPipe(streamRdEp);
     for(int i=0; i<USB_MAX_CONTEXTS; ++i)
@@ -687,8 +687,8 @@ void ConnectionFT601::AbortSending(int ep)
 #else
     for(int i = 0; i<USB_MAX_CONTEXTS; ++i)
     {
-        if(contextsToSend[i].used)
-            libusb_cancel_transfer(contextsToSend[i].transfer);
+        //if(contextsToSend[i].used)
+        //    libusb_cancel_transfer(contextsToSend[i].transfer);
     }
     for (int i = 0; i<USB_MAX_CONTEXTS; ++i)
     {
